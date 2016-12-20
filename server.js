@@ -17,14 +17,14 @@ app.disable('x-powered-by');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join('public')));
+app.use(express.static(path.join('dist')));
 
 const test = require('./routes/test')
 
 app.use(test);
 
 app.use((_req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.use((err, _req, res, _next) => {
