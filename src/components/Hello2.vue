@@ -28,7 +28,7 @@ export default {
       msg: 'Welcome to Your Vue.js App2342342344234'
     }
   },
-  created: function() {
+  beforeCreate: function() {
 
 
   },

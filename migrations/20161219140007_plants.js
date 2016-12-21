@@ -4,7 +4,7 @@ exports.up = function(knex) {
   return knex.schema.createTable('plants', (table) => {
     table.increments();
     table.string('name').notNullable().defaultTo('');
-    table.string('type').notNullable().defaultTo('');
+    table.string('plant_type').notNullable().defaultTo('');
     table.timestamps(true, true);
   });
 };

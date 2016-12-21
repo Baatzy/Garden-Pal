@@ -25,10 +25,10 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: ''
     }
   },
-  created: function() {
+  beforeCreate: function() {
 
       console.log('before ');
       this.$http.get('/api/party').then((res) => {

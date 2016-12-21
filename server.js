@@ -19,7 +19,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join('public')));
 
-const test = require('./routes/test')
+const test = require('./routes/test');
+const users = require('./routes/users');
+const token = require('./routes/token');
 
 app.use(test);
 
