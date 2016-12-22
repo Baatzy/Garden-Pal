@@ -65,9 +65,9 @@ router.post('/api/users', (req, res, next) => {
 
       delete user.hashedPassword;
 
-      const expiry = new Date(Date.now() + 1000 * 60 * 60 * 3); // 3 hours
+      const expiry = new Date(Date.now() + 1000 * 60 * 60 * 50); // 3 hours
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '3h'
+        expiresIn: '50h'
       });
 
       res.cookie('token', token, {

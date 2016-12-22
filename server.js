@@ -22,8 +22,12 @@ app.use(express.static(path.join('public')));
 const test = require('./routes/test');
 const users = require('./routes/users');
 const token = require('./routes/token');
+const usersPlants = require('./routes/users_plants')
 
 app.use(test);
+app.use(users);
+app.use(token);
+app.use(usersPlants);
 
 app.use((_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
