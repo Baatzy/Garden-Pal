@@ -28,9 +28,8 @@ export default {
       msg: ''
     }
   },
-  beforeCreate: function() {
+  beforeMount: function() {
 
-      console.log('before ');
       this.$http.get('/api/party').then((res) => {
         this.msg = res.body;
       }, (res) => {

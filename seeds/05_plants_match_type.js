@@ -20,6 +20,11 @@ exports.seed = function(knex) {
       plant1_id: 2,
       plant2_id: 4,
       match_type_id: 4
+    }, {
+      id: 4,
+      plant1_id: 4,
+      plant2_id: 5,
+      match_type_id: 4
     }]);
   })
   .then(() => {

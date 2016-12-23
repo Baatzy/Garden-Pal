@@ -1,14 +1,8 @@
 <template>
   <div id="app">
-
-      <navi>
-
-      </navi>
-
-    <main>
-      <router-view></router-view>
-    </main>
-    <footer><foot></foot></footer>
+    <navi></navi>
+    <router-view></router-view>
+    <foot></foot>
   </div>
 </template>
 
@@ -32,6 +26,8 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  width: 100%;
 
 }
 </style>

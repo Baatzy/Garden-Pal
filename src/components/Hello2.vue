@@ -25,7 +25,7 @@ export default {
   name: 'hello2',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App2342342344234'
+      msg: 'Welcome to Your Vue.js App'
     }
   },
   beforeCreate: function() {

@@ -4,16 +4,12 @@ import Vue from 'vue';
 import App from './App';
 import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue';
 
 import hello from './components/Hello';
 import hello2 from './components/Hello2';
 
-// Globally register bootstrap-vue components
-Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(VueResource);
-
 
 const routes = [
   { path: '/hello', alias: '/', component: hello },
