@@ -58,17 +58,14 @@ router.get('/api/users_plants/rel', authorize, (req, res, next) => {
 
     for (let i = 0; i < plantsArr.length; i++) {
 
-
       for (let j = 0; j < matches.length; j++) {
         if (plantsArr[i] === matches[j].plant1_id) {
           matchTypes.push(matches[j])
         }
       }
-
     }
 
     for (let i = 0; i < plantsArr.length; i++) {
-
 
       for (let j = 0; j < matchTypes.length; j++) {
         if (plantsArr[i] === matchTypes[j].plant2_id) {
