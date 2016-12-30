@@ -1,14 +1,14 @@
 'use strict';
 
 exports.up = function(knex) {
-  return knex.schema.createTable('users_plants', (table) => {
+  return knex.schema.createTable('friends', (table) => {
     table.increments();
     table.integer('user_id').notNullable().references('id').inTable('users');
-    table.integer('plant_id').notNullable().references('id').inTable('plants');
+    table.integer('friend_id').notNullable().references('id').inTable('users');
     table.timestamps(true, true);
   });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('users_plants');
+  return knex.schema.dropTable('friends');
 };

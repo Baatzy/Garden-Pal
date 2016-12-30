@@ -28,7 +28,6 @@
     "jsonwebtoken": "^7.1.9",
     "knex": "^0.12.6",
     "lodash": "^4.17.2",
-    "materialize-css": "^0.97.8",
     "morgan": "^1.7.0",
     "nodemon": "^1.11.0",
     "pg": "^6.1.0",

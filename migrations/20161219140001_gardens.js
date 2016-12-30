@@ -1,14 +1,13 @@
 'use strict';
 
 exports.up = function(knex) {
-  return knex.schema.createTable('plants', (table) => {
+  return knex.schema.createTable('gardens', (table) => {
     table.increments();
     table.string('name').notNullable().defaultTo('');
-    table.string('plant_type').notNullable().defaultTo('');
     table.timestamps(true, true);
   });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('plants');
+  return knex.schema.dropTable('gardens');
 };

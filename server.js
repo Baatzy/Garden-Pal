@@ -11,6 +11,13 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const port = process.env.PORT || 8000;
 const path = require('path');
+const cloudinary = require('cloudinary')
+
+cloudinary.config({
+  cloud_name: 'derekww',
+  api_key: '598116923584355',
+  api_secret: 'dVu8A-SyKJ0PmEId3IZnYvRX4o0'
+});
 
 app.disable('x-powered-by');
 

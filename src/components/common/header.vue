@@ -1,11 +1,17 @@
 <template>
   <div class="navi">
-
-
-
-    <router-link to="/hello">Go to first</router-link>
-    <router-link to="/hello2">Go to second</router-link>
-
+    <header>
+    <nav>
+      <div class="nav-wrapper red">
+        <router-link to="/hello" class="brand-logo">Garden Bro</router-link>
+        <ul class="right">
+          <li><router-link to="/hello">Home</router-link></li>
+          <li><router-link to="/hello2">Go to second</router-link></li>
+          <li><a href="collapsible.html">JavaScript</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
   </div>
 </template>
 
@@ -18,7 +24,8 @@ export default {
   name: 'navi',
   data () {
     return {
-      msg: ''
+      msg: '',
+      isLogged: false
     }
   },
   created: function() {
@@ -26,11 +33,17 @@ export default {
 
 
   },
+  methods: {
+    isLoggedIn: function() {
+
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 
 
 </style>

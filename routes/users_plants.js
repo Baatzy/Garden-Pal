@@ -24,6 +24,12 @@ const authorize = function(req, res, next) {
   });
 };
 
+router.get('/api/pics', (req, res, next) => {
+
+  cloudinary.image("sample.jpg", { width: 100, height: 150, crop: "fill" })
+  res.send(cloudinary.image("sample.jpg", { width: 100, height: 150, crop: "fill" }))
+})
+
 //get back users plants relationships
 router.get('/api/users_plants/rel', authorize, (req, res, next) => {
   const userId = req.token.userId;
