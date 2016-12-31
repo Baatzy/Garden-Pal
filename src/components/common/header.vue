@@ -7,8 +7,7 @@
         <ul class="right">
           <li><router-link to="/hello">Home</router-link></li>
           <li><router-link to="/hello2">Go to second</router-link></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
+          <li><router-link to="/signup">Sigup!</router-link></li>        </ul>
       </div>
     </nav>
   </header>

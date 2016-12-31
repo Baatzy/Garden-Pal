@@ -30,11 +30,11 @@ export default {
   },
   beforeMount: function() {
 
-      this.$http.get('/api/party').then((res) => {
-        this.msg = res.body;
-      }, (res) => {
-        console.error(res);
-      })
+      // this.$http.get('/api/party').then((res) => {
+      //   this.msg = res.body;
+      // }, (res) => {
+      //   console.error(res);
+      // })
 
   },
 }

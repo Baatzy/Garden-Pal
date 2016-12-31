@@ -7,13 +7,16 @@ import VueRouter from 'vue-router';
 
 import hello from './components/Hello';
 import hello2 from './components/Hello2';
+import signup from './components/signup';
+
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
 const routes = [
   { path: '/hello', alias: '/', component: hello },
-  { path: '/hello2', component: hello2 }
+  { path: '/hello2', component: hello2 },
+  { path: '/signup', component: signup}
 ];
 
 // Create the router instance and pass the `routes` option
