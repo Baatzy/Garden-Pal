@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <navi></navi>
-    <main>
-      <router-view></router-view>
+    <navi :is-logged-in="this.isLoggedIn" v-on:checkIfLogged="checkIfLogged"></navi>
+    <main class="grey lighten-5">
+      <router-view v-on:checkIfLogged="checkIfLogged"></router-view>
     </main>
-    <foot></foot>
+    <foot class="grey lighten-5"></foot>
   </div>
 </template>
 
@@ -19,6 +19,26 @@ export default {
   components: {
     navi,
     foot
+  },
+  methods: {
+
+  },
+  data () {
+    return {
+      isLoggedIn: false
+    }
+  },
+  methods: {
+    checkIfLogged: function () {
+      this.$http.get('/api/token')
+      .then((res) => {
+        console.log(res);
+        this.isLoggedIn = res.body
+      })
+    }
+  },
+  events: {
+
   }
 }
 </script>
@@ -45,5 +65,6 @@ body {
 
 main {
   flex: 1 0 auto;
+  background-color:
 }
 </style>

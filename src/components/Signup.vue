@@ -9,7 +9,7 @@
           </div>
         </div>
           <div class="row ">
-            <form class="col s12 ">
+            <form class="col s12 " v-on:submit.prevent="signUp">
               <div class="row">
                 <div class="input-field col s6">
                   <input id="first_name" v-model="firstName" type="text" class="validate">
@@ -41,7 +41,7 @@
               <div class="file-field input-field">
                 <div class="btn">
                   <span>Profile Picture</span>
-                  <input type="file">
+                  <input v-on:change="fileUpload" type="file">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -49,7 +49,7 @@
               </div>
               <div class="row">
                 <div class="col s4 offset-s4">
-                  <button class="btn waves-effect waves-light center-align" v-on:click="signUp" type="submit" name="action">Submit
+                  <button class="btn waves-effect waves-light center-align" >Submit
                     <i class="material-icons right">send</i>
                   </button>
                 </div>
@@ -72,26 +72,42 @@ export default {
       lastName: '',
       username: '',
       email: '',
-      password: ''
+      password: '',
+      profilePic: ''
     }
   },
   beforeCreate: function() {
+    this.$emit('checkIfLogged');
 
 
   },
   methods: {
+    fileUpload: function (e) {
+      this.profilePic = e.target.files[0];
+      console.log(this.profilePic);
+    },
     signUp: function (e) {
       e.preventDefault();
+
+
+
       this.$http.post('/api/users',{
         firstName: this.firstName,
         lastName: this.lastName,
         username: this.username,
         email: this.email,
-        password: this.password
+        password: this.password,
+        profilePic: this.profilePic
       }).then((res) => {
-        console.log(res);
-      } )
-      console.log('swag');
+        this.$emit('checkIfLogged');
+      })
+      .then(() => {
+        this.$router.push('/hello2');
+      })
+      .catch((err) => {
+        Materialize.toast(err.body, 4000)
+        console.log(err);
+      })
     }
   }
 }

@@ -1,5 +1,10 @@
 <template>
-  <div class="hello2">
+  <div class="hello2 container">
+    <div class="row">
+      <div class="col s12">
+        <h3></h3>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +17,7 @@ export default {
     }
   },
   beforeCreate: function() {
+    this.$emit('checkIfLogged');
 
 
   },

@@ -8,12 +8,21 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
+const cloudinary = require('cloudinary');
 
-// eslint-disable-next-line new-cap
+
+// eslint-disable new-cap
 const router = express.Router();
 
+cloudinary.config({
+  cloud_name: 'derekww',
+  api_key: '598116923584355',
+  api_secret: 'dVu8A-SyKJ0PmEId3IZnYvRX4o0'
+});
+
 router.post('/api/users', (req, res, next) => {
-  let { firstName, lastName, email, password, username } = req.body;
+  let { firstName, lastName, email, password, username, profilePic  } = req.body;
+  console.log(req);
 
   console.log(req.body);
 
@@ -23,10 +32,6 @@ router.post('/api/users', (req, res, next) => {
 
   if (!lastName || !lastName.trim()) {
     return next(boom.create(400, 'Last Name must not be blank'));
-  }
-
-  if (!email || !email.trim()) {
-    return next(boom.create(400, 'Email must not be blank'));
   }
 
   if (!username || !username.trim()) {
@@ -40,6 +45,10 @@ router.post('/api/users', (req, res, next) => {
     ));
   }
 
+  if (!email || !email.trim()) {
+    return next(boom.create(400, 'Email must not be blank'));
+  }
+
   knex('users')
     .where('username', username)
     .first()
@@ -47,6 +56,14 @@ router.post('/api/users', (req, res, next) => {
       if (exists) {
         throw boom.create(400, 'Username already exists');
       }
+    })
+    .then(() => {
+      console.log('swag');
+      cloudinary.uploader.upload(profilePic, function(result) {
+        console.log(result)
+        console.log('yolo');
+      });
+    }).then(() => {
 
       return bcrypt.hash(password, 12);
     })
