@@ -24,7 +24,7 @@ const authorize = function(req, res, next) {
   });
 };
 
-router.post('/api/user_gardens', authorize, (req, res, next) => {
+router.get('/api/user_gardens', authorize, (req, res, next) => {
   const userId = req.token.userId;
 
   knex('users')

@@ -11,7 +11,9 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const port = process.env.PORT || 8000;
 const path = require('path');
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
+const formData = require("express-form-data");
+
 
 cloudinary.config({
   cloud_name: 'derekww',
@@ -25,6 +27,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join('public')));
+app.use(formData.parse());
 
 const test = require('./routes/test');
 const users = require('./routes/users');

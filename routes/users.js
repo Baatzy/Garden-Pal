@@ -9,10 +9,27 @@ const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const cloudinary = require('cloudinary');
+// const multer  = require('multer');
+// const upload = multer();
+
 
 
 // eslint-disable new-cap
 const router = express.Router();
+
+const authorize = function(req, res, next) {
+  const token = req.cookies.token;
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return next(boom.create(401, 'Unauthorized'));
+    }
+
+    req.token = decoded;
+
+    next();
+  });
+};
 
 cloudinary.config({
   cloud_name: 'derekww',
@@ -20,11 +37,29 @@ cloudinary.config({
   api_secret: 'dVu8A-SyKJ0PmEId3IZnYvRX4o0'
 });
 
+router.get('/api/user' , authorize, (req, res, next) => {
+  const userId = req.token.userId;
+
+  knex('users')
+  .select('first_name', 'last_name', 'username', 'profile_pic')
+  .where('users.id', userId)
+  .then((rows) => {
+    res.send(camelizeKeys(rows[0]))
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+
+
+});
+
 router.post('/api/users', (req, res, next) => {
-  let { firstName, lastName, email, password, username, profilePic  } = req.body;
-  console.log(req);
+  let { firstName, lastName, email, password, username } = req.body;
+  let profilePicIncoming = req.files.profilePic.path;
+  let profilePic;
 
   console.log(req.body);
+  console.log(req.files);
 
   if (!firstName || !firstName.trim()) {
     return next(boom.create(400, 'First Name must not be blank'));
@@ -58,12 +93,23 @@ router.post('/api/users', (req, res, next) => {
       }
     })
     .then(() => {
-      console.log('swag');
-      cloudinary.uploader.upload(profilePic, function(result) {
-        console.log(result)
-        console.log('yolo');
-      });
-    }).then(() => {
+
+    return cloudinary.uploader.upload(profilePicIncoming, () => {}, {
+      transformation: [
+      {width: 400,
+      height: 400,
+      gravity: "face",
+      crop: "thumb"}]
+    })
+
+
+
+
+  }).then((result) => {
+
+    console.log(result)
+    profilePic = result.url;
+    console.log(profilePic);
 
       return bcrypt.hash(password, 12);
     })
@@ -72,7 +118,8 @@ router.post('/api/users', (req, res, next) => {
       lastName = lastName.toLowerCase();
       email = email.toLowerCase();
       username = username.toLowerCase();
-      const insertUser = { firstName, lastName, email, hashedPassword, username };
+      profilePic = profilePic.toLowerCase();
+      const insertUser = { firstName, lastName, email, hashedPassword, username, profilePic };
 
       return knex('users')
         .insert(decamelizeKeys(insertUser), '*');
@@ -92,7 +139,7 @@ router.post('/api/users', (req, res, next) => {
         expires: expiry,
         secure: router.get('env') === 'production'
       });
-
+      console.log(user);
       res.send(user);
     })
     .catch((err) => {

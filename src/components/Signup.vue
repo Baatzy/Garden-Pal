@@ -89,16 +89,20 @@ export default {
     signUp: function (e) {
       e.preventDefault();
 
+      let formData = new FormData();
 
+      formData.append('firstName', this.firstName);
+      formData.append('lastName', this.lastName);
+      formData.append('username', this.username);
+      formData.append('email', this.email);
+      formData.append('password', this.password);
+      formData.append('profilePic', this.profilePic);
 
-      this.$http.post('/api/users',{
-        firstName: this.firstName,
-        lastName: this.lastName,
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        profilePic: this.profilePic
-      }).then((res) => {
+      console.log(formData);
+
+      // Materialize.toast('Creating Account, Please Wait...', 6000)
+      this.$http.post('/api/users', formData
+      ).then((res) => {
         this.$emit('checkIfLogged');
       })
       .then(() => {

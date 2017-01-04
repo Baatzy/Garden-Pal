@@ -7,7 +7,7 @@
           <ul class="right">
             <li v-if="isLoggedIn === false"><router-link to="/">Home</router-link></li>
             <li v-if="isLoggedIn === true"><router-link to="/hello2">Go to second</router-link></li>
-            <li v-if="isLoggedIn === false"><router-link to="/login">Login</router-link></li>
+            <li v-if="isLoggedIn === false"><router-link to="/login">Login/Signup</router-link></li>
             <li v-else-if="isLoggedIn === true"><a v-on:click="logout">Logout</a></li>
           </ul>
         </div>
