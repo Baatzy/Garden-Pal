@@ -32,12 +32,14 @@ app.use(formData.parse());
 const test = require('./routes/test');
 const users = require('./routes/users');
 const token = require('./routes/token');
-const usersGardens = require('./routes/users_gardens')
+const usersGardens = require('./routes/users_gardens');
+const friends = require('./routes/friends');
 
 app.use(test);
 app.use(users);
 app.use(token);
 app.use(usersGardens);
+app.use(friends);
 
 app.use((_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

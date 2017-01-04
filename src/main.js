@@ -9,7 +9,8 @@ import axios from 'axios';
 import hello from './components/Hello';
 import hello2 from './components/Hello2';
 import signup from './components/signup';
-import login from './components/login'
+import login from './components/login';
+import friends from './components/friends'
 
 let isLoggedIn = false;
 
@@ -23,7 +24,9 @@ const routes = [
   { path: '/landing', alias: '/', component: hello, meta: { requiresAuth: false } },
   { path: '/hello2', component: hello2, meta: { requiresAuth: true } },
   { path: '/signup', component: signup, meta: { requiresAuth: false } },
-  { path: '/login', component: login, meta: { requiresAuth: false } }
+  { path: '/login', component: login, meta: { requiresAuth: false } },
+  { path: '/friends', component: friends, meta: { requiresAuth: true } },
+
 ];
 
 // Create the router instance and pass the `routes` option
