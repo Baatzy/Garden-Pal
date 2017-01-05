@@ -24,6 +24,29 @@ const authorize = function(req, res, next) {
   });
 };
 
+router.get('/api/friends', authorize, (req, res, next) => {
+  const userId = req.token.userId;
+
+  knex('friends')
+    .select('friend_id')
+    .where('user_id', userId)
+    .then((followedIds) => {
+      const idArray = [];
+
+      for (const id of followedIds) {
+        idArray.push(id.friend_id);
+      }
+
+      return knex('users').select('first_name', 'last_name', 'id').whereIn('id', idArray);
+    })
+    .then((friendsList) => {
+      res.send(friendsList);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.get('/api/friends/:search', authorize, (req, res, next) => {
   let search = req.params.search;
   console.log(search);
@@ -41,6 +64,31 @@ router.get('/api/friends/:search', authorize, (req, res, next) => {
     console.error(err);
   })
 
+})
+
+router.post('/api/friends', authorize, (req, res, next) => {
+  const userId = req.token.userId;
+  const friendId = req.body.friendId;
+
+  const friends = { userId, friendId }
+
+  knex('friends')
+  .where('user_id', userId)
+  .andWhere('friend_id', friendId)
+  .first()
+  .then((rows) => {
+    if (rows) {
+        throw boom.create(400, 'User is already following this account!');
+      }
+
+    return knex('friends').insert(decamelizeKeys(friends), '*');
+  })
+  .then((rows) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      next(err);
+    });
 })
 
 module.exports = router;

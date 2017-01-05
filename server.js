@@ -34,12 +34,14 @@ const users = require('./routes/users');
 const token = require('./routes/token');
 const usersGardens = require('./routes/users_gardens');
 const friends = require('./routes/friends');
+const usersPosts = require('./routes/users_posts')
 
 app.use(test);
 app.use(users);
 app.use(token);
 app.use(usersGardens);
 app.use(friends);
+app.use(usersPosts);
 
 app.use((_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
