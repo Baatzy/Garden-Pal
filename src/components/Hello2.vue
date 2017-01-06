@@ -19,6 +19,9 @@
                     <h4>Create a new post</h4>
                   </div>
                   <div class="col s6">
+                    <div class="col s12 center">
+                      Select Garden to Post To
+                    </div>
                     <div class="input-field col s12 ">
                       <select id="garden_select" class="browser-default" v-model="selectedGardenPost">
                         <option value="" disabled>Select Garden</option>
@@ -53,7 +56,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" v-on:click="submitNewPost">Agree</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" v-on:click="submitNewPost">Post</a>
                 <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
 
               </div>
@@ -247,8 +250,11 @@ export default {
       // Materialize.toast('Creating Account, Please Wait...', 6000)
       this.$http.post('/api/users_post', formData
       ).then((res) => {
-      })
-      .then(() => {
+        Materialize.toast('Post submitted! Your followers will see it on their feed!', 4000)
+
+        this.selectedGardenPost = '',
+        this.postContent = '',
+        this.postPhoto = ''
       })
       .catch((err) => {
         Materialize.toast(err.body, 4000)
