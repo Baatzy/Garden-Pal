@@ -37,7 +37,7 @@
             <div class="icon-block">
               <h2 class="center"><i class="material-icons">settings</i></h2>
               <h5 class="center">Easy to use</h5>
-              <p class="light">Thestral dirigible plums, Viktor Krum hexed memory charm Animagus Invisibility Cloak three-headed Dog. Half-Blood Prince Invisibility Cloak cauldron cakes, hiya Harry! Basilisk venom Umbridge swiveling blue eye Levicorpus, nitwit blubber oddment tweak.</p>
+              <p class="light">Once you make and account you can start showing off. Create a new garden with a good descriptive name.  Add posts to your different gardens to show them grow over time. Follow other users and see what they are growing!</p>
             </div>
           </div>
         </div>
