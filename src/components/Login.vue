@@ -68,7 +68,7 @@ export default {
         this.password = '';
       })
       .then(() => {
-        this.$router.push('/hello2');
+        this.$router.push('/profile');
 
       })
       .catch((err) => {

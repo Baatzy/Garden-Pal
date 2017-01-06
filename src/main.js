@@ -22,7 +22,7 @@ Vue.use(VueResource);
 
 const routes = [
   { path: '/landing', alias: '/', component: hello, meta: { requiresAuth: false } },
-  { path: '/hello2', component: hello2, meta: { requiresAuth: true } },
+  { path: '/profile', component: hello2, meta: { requiresAuth: true } },
   { path: '/signup', component: signup, meta: { requiresAuth: false } },
   { path: '/login', component: login, meta: { requiresAuth: false } },
   { path: '/friends', component: friends, meta: { requiresAuth: true } },
@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
       if(!isLoggedIn) {
         next()
       } else {
-        next({ path: '/hello2'})
+        next({ path: '/profile'})
       }
     }
 
