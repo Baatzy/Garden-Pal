@@ -84,7 +84,6 @@ export default {
   methods: {
     fileUpload: function (e) {
       this.profilePic = e.target.files[0];
-      console.log(this.profilePic);
     },
     signUp: function (e) {
       e.preventDefault();
@@ -98,7 +97,6 @@ export default {
       formData.append('password', this.password);
       formData.append('profilePic', this.profilePic);
 
-      console.log(formData);
 
       // Materialize.toast('Creating Account, Please Wait...', 6000)
       this.$http.post('/api/users', formData
@@ -110,7 +108,6 @@ export default {
       })
       .catch((err) => {
         Materialize.toast(err.body, 4000)
-        console.log(err);
       })
     }
   }

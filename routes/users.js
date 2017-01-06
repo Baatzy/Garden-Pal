@@ -58,8 +58,7 @@ router.post('/api/users', (req, res, next) => {
   let profilePicIncoming = req.files.profilePic.path;
   let profilePic;
 
-  console.log(req.body);
-  console.log(req.files);
+
 
   if (!firstName || !firstName.trim()) {
     return next(boom.create(400, 'First Name must not be blank'));
@@ -106,10 +105,7 @@ router.post('/api/users', (req, res, next) => {
 
 
   }).then((result) => {
-
-    console.log(result)
     profilePic = result.url;
-    console.log(profilePic);
 
       return bcrypt.hash(password, 12);
     })
@@ -139,7 +135,6 @@ router.post('/api/users', (req, res, next) => {
         expires: expiry,
         secure: router.get('env') === 'production'
       });
-      console.log(user);
       res.send(user);
     })
     .catch((err) => {

@@ -56,7 +56,6 @@ export default {
     this.$emit('checkIfLogged');
     this.$http.get('/api/user')
     .then((res) => {
-      console.log(res.body);
       this.user = res.body;
 
     })
@@ -79,7 +78,6 @@ export default {
       .then((res) => {
         Materialize.toast(`You have added a user`, 3000)
 
-        console.log(res);
       })
       .catch((err) => {
         Materialize.toast(err.body, 3000)

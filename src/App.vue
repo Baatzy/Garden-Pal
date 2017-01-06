@@ -32,7 +32,6 @@ export default {
     checkIfLogged: function () {
       this.$http.get('/api/token')
       .then((res) => {
-        console.log(res);
         this.isLoggedIn = res.body
       })
     }

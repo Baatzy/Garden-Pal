@@ -30,13 +30,9 @@ router.get('/api/user_gardens', authorize, (req, res, next) => {
   knex('users')
   .innerJoin('users_gardens', 'users.id', 'users_gardens.user_id')
   .innerJoin('gardens', 'users_gardens.garden_id', 'gardens.id')
-  .innerJoin('garden_posts', 'garden_posts.garden_id', 'gardens.id')
-  .innerJoin('posts', 'posts.id', 'garden_posts.post_id')
-  .innerJoin('posts_photos', 'posts.id', 'posts_photos.post_id')
-  .innerJoin('photos', 'photos.id', 'posts_photos.photo_id')
   .where('users.id', userId)
   .then((rows) => {
-    res.send(rows)
+    res.send(camelizeKeys(rows))
   })
   .catch((err) => {
     console.error(err);
@@ -64,7 +60,6 @@ router.post('/api/gardens', authorize, (req, res, next) => {
   let gardenId;
 
   const newGarden = { name }
-  console.log('yolo');
 
   knex('gardens')
   .insert(decamelizeKeys(newGarden), '*')

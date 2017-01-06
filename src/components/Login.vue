@@ -63,7 +63,6 @@ export default {
         username: this.username,
         password: this.password
       }).then((res) => {
-        console.log(res);
         this.$emit('checkIfLogged');
         this.username = '';
         this.password = '';

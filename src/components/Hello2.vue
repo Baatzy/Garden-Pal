@@ -10,15 +10,52 @@
             <img id="profile" class="responsive-img" v-bind:src="user.profilePic"  />
           </div>
           <div class="col s12">
-            <a class="waves-effect waves-light btn peach" href="#newpost">New Post</a>
+            <a class="waves-effect waves-light btn peach" href="#newpost" v-on:click="updateGardens">New Post</a>
 
             <div id="newpost" class="modal">
               <div class="modal-content">
-                <h4>Modal Header</h4>
-                <p>A bunch of text</p>
+                <div class="row">
+                  <div class="col s6">
+                    <h4>Create a new post</h4>
+                  </div>
+                  <div class="col s6">
+                    <div class="input-field col s12 ">
+                      <select id="garden_select" class="browser-default" v-model="selectedGardenPost">
+                        <option value="" disabled>Select Garden</option>
+                        <option v-for="garden in this.usersGardens" v-bind:value="garden.id">{{ garden.name }}</option>
+
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <form>
+                    <div class="file-field input-field col s12">
+                      <div class="btn">
+                        <span>Picture</span>
+                        <input type="file" v-on:change="postUpdatePhoto">
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <form class="col s12">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <textarea id="textarea1" class="materialize-textarea" v-model="postContent"></textarea>
+                            <label for="textarea1">Write Garden Post Here!</label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </form>
+                </div>
               </div>
               <div class="modal-footer">
-                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" v-on:click="submitNewPost">Agree</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+
               </div>
             </div>
           </div>
@@ -94,6 +131,7 @@
 <script>
 export default {
   name: 'hello2',
+
   data () {
     return {
       user: '',
@@ -101,33 +139,65 @@ export default {
       postText: '',
       postImage: '',
       postName: '',
-      gardenName: ''
+      gardenName: '',
+      usersGardens: [],
+      selectedGardenPost: '',
+      postPhoto: '',
+      postContent: '',
     }
   },
+
   mounted: function() {
     $(document).ready(function(){
       // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
+      $('select').material_select();
     });
+
+    this.$http.get('/api/friends_posts')
+    .then((res) => {
+      this.friendsPosts = res.body
+
+    })
+    .catch((err) => {
+      console.error(err);
+    })
   },
+
   beforeCreate: function() {
     this.$emit('checkIfLogged');
+
     this.$http.get('/api/user')
     .then((res) => {
-      console.log(res.body);
       this.user = res.body;
 
       return this.$http.get('/api/friends_posts')
     })
     .then((res) => {
-      console.log(res.body);
       this.friendsPosts = res.body
+      this.selectedGardenPost = res.body[0].id
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+
+    this.$http.get('/api/user_gardens')
+    .then((res) => {
+      this.usersGardens = res.body;
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+
     })
     .catch((err) => {
       console.error(err);
     })
 
   },
+  created: function () {
+
+  },
+
   methods: {
     addGarden: function () {
       if (this.gardenName !== '') {
@@ -145,6 +215,45 @@ export default {
       } else {
         Materialize.toast('Garden Name Cannot be Blank, Try Again', 2000)
       }
+    },
+
+    updateGardens: function () {
+      this.$http.get('/api/user_gardens')
+      .then((res) => {
+        console.log(res);
+        this.usersGardens = res.body;
+        $(document).ready(function() {
+          $('select').material_select();
+        });
+
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+    },
+    postUpdatePhoto: function (e) {
+      this.postPhoto = e.target.files[0];
+      console.log(this.postPhoto);
+    },
+    submitNewPost: function () {
+      let formData = new FormData();
+
+      formData.append('gardenId', this.selectedGardenPost);
+      formData.append('content', this.postContent);
+      formData.append('photo', this.postPhoto);
+
+      console.log(formData);
+
+      // Materialize.toast('Creating Account, Please Wait...', 6000)
+      this.$http.post('/api/users_post', formData
+      ).then((res) => {
+      })
+      .then(() => {
+      })
+      .catch((err) => {
+        Materialize.toast(err.body, 4000)
+        console.log(err);
+      })
     }
   }
 }

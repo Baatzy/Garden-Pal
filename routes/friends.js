@@ -49,7 +49,6 @@ router.get('/api/friends', authorize, (req, res, next) => {
 
 router.get('/api/friends/:search', authorize, (req, res, next) => {
   let search = req.params.search;
-  console.log(search);
 
   knex('users')
   .where('first_name', 'like', `%${search}%`)
@@ -57,7 +56,6 @@ router.get('/api/friends/:search', authorize, (req, res, next) => {
   .orWhere('username', 'like', `%${search}%`)
   .orWhere('email', 'like', `%${search}%`)
   .then((result) => {
-    console.log(res);
     res.send(camelizeKeys(result))
   })
   .catch((err) => {
