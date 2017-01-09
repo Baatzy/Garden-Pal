@@ -55,6 +55,28 @@ router.get('/api/friends_posts', authorize, (req, res, next) => {
 
 });
 
+router.get('/api/users_posts', authorize, (req, res, next) => {
+  const userId = req.token.userId;
+
+  knex('users')
+  .innerJoin('users_gardens', 'users.id', 'users_gardens.user_id')
+  .innerJoin('gardens', 'users_gardens.garden_id', 'gardens.id')
+  .innerJoin('garden_posts', 'garden_posts.garden_id', 'gardens.id')
+  .innerJoin('posts', 'posts.id', 'garden_posts.post_id')
+  .innerJoin('posts_photos', 'posts.id', 'posts_photos.post_id')
+  .innerJoin('photos', 'photos.id', 'posts_photos.photo_id')
+  .select('gardens.name as garden_name', 'username', 'posts.id as post_id', 'content', 'photos.url as photo_url', 'gardens.id as garden_id', 'posts.created_at as created_at', 'users.first_name', 'users.last_name', 'posts.id as post_id')
+  .where('users.id', userId)
+  .orderBy('posts.id', 'desc')
+  .then((rows) => {
+    res.send(camelizeKeys(rows))
+  })
+  .catch((err) => {
+  })
+
+
+});
+
 router.post('/api/users_post', authorize, (req, res, next) => {
   const userId = req.token.userId;
 

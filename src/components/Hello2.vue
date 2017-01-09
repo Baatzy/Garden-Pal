@@ -92,9 +92,13 @@
       </div>
       <div class="col s8">
         <div class="row">
-          <div class="col s3 offset-s4">
+          <div class="col s4">
 
-            <h5 class="center-align">Your Feed</h5>
+            <a class="waves-effect waves-light btn peach feed" v-on:click="showFriendsPosts">Your Feed</a>
+          </div>
+          <div class="col s4 offset-s4">
+            <a class="waves-effect waves-light btn peach feed" v-on:click="showYourPosts">Your Posts</a>
+
           </div>
         </div>
         <div class="row">
@@ -259,10 +263,22 @@ export default {
       .catch((err) => {
         Materialize.toast(err.body, 4000)
         console.log(err);
-      })
+      })},
+      showYourPosts: function () {
+        this.$http.get('/api/users_posts')
+        .then((res) => {
+          this.friendsPosts = res.body;
+        })
+      },
+      showFriendsPosts: function () {
+        this.$http.get('/api/friends_posts')
+        .then((res) => {
+          this.friendsPosts = res.body
+        })
+      }
     }
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -283,6 +299,10 @@ export default {
 
 .title {
   border-bottom: 1px solid #ffb797
+}
+
+.feed {
+  margin-top: 9%
 }
 
 #profile {
