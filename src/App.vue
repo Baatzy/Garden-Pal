@@ -53,6 +53,7 @@ export default {
   min-height: 100vh;
   flex-direction: column;
   flex: 1 0 auto;
+  font-weight: 900;
 
 }
 
