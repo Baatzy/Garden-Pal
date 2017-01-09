@@ -105,7 +105,8 @@ router.post('/api/users', (req, res, next) => {
 
 
   }).then((result) => {
-    profilePic = result.url;
+    console.log(result);
+    profilePic = result.secure_url;
 
       return bcrypt.hash(password, 12);
     })

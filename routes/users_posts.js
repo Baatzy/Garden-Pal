@@ -114,7 +114,7 @@ router.post('/api/users_post', authorize, (req, res, next) => {
 
       })
       .then((result) => {
-        photoUrl = result.url;
+        photoUrl = result.secure_url;
 
         return knex('photos').insert({ url: photoUrl}, '*')
       })

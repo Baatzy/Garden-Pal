@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-      <div class="col s8">
+      <div class="col s10">
         <div class="row">
           <div class="col s4">
 
