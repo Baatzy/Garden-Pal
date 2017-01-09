@@ -45,6 +45,7 @@ router.get('/api/friends_posts', authorize, (req, res, next) => {
   .innerJoin('photos', 'photos.id', 'posts_photos.photo_id')
   .select('gardens.name as garden_name', 'username', 'posts.id as post_id', 'content', 'photos.url as photo_url', 'gardens.id as garden_id', 'posts.created_at as created_at', 'users.first_name', 'users.last_name', 'posts.id as post_id')
   .where('friends.user_id', userId)
+  .andWhereNot('users.id', userId)
   .orderBy('posts.id', 'desc')
   .then((rows) => {
     res.send(camelizeKeys(rows))
