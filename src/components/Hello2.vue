@@ -163,12 +163,25 @@ export default {
 
     this.$http.get('/api/friends_posts')
     .then((res) => {
+      console.log(res);
       this.friendsPosts = res.body
 
+      if (this.friendsPosts.length === 0) {
+        let newUser = {};
+        newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
+        newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
+        newUser.firstName = "John";
+        newUser.lastName = "Doe";
+        newUser.gardenName = "Cool Garden";
+        newUser.gardenId = 0;
+        console.log(newUser);
+        this.friendsPosts = [newUser]
+      }
     })
     .catch((err) => {
       console.error(err);
     })
+
   },
 
   beforeCreate: function() {
@@ -181,8 +194,10 @@ export default {
       return this.$http.get('/api/friends_posts')
     })
     .then((res) => {
-      this.friendsPosts = res.body
-      this.selectedGardenPost = res.body[0].id
+      // this.friendsPosts = res.body;
+      this.selectedGardenPost = res.body[0].id;
+
+      console.log('no good');
     })
     .catch((err) => {
       console.error(err);
