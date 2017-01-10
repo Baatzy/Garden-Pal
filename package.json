@@ -13,7 +13,7 @@
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "knex": "knex",
-    "heroku-postbuild": "knex migrate:latest"
+    "heroku-postbuild": "node build/build.js; knex migrate:latest"
   },
   "dependencies": {
     "axios": "^0.15.3",

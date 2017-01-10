@@ -37,7 +37,7 @@
             <div class="icon-block">
               <h2 class="center"><i class="material-icons">settings</i></h2>
               <h5 class="center">Easy to use</h5>
-              <p class="light">Once you make and account you can start showing off. Create a new garden with a good descriptive name.  Add posts to your different gardens to show them grow over time. Follow other users and see what they are growing!</p>
+              <p class="light">Once you make an, account you can start showing off. Create a new garden with a good descriptive name.  Add posts to your different gardens to show them grow over time. Follow other users and see what they are growing!</p>
             </div>
           </div>
         </div>
