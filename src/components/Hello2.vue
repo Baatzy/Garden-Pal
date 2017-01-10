@@ -310,7 +310,7 @@ export default {
 }
 
 .peach {
-  background-color: #86e2bf;
+  background-color: #269974;
   width: 100%;
   margin-bottom: 4%;
 }

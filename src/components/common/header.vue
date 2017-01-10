@@ -60,7 +60,7 @@ export default {
 <style scoped>
 
 .color {
-  background-color: #86e2bf;
+  background-color: #269974;
 }
 
 li:hover {
