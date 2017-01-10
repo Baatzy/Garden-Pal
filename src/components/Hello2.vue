@@ -154,7 +154,7 @@ export default {
     }
   },
 
-  mounted: function() {
+  beforeMount: function() {
     $(document).ready(function(){
       // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
@@ -163,19 +163,18 @@ export default {
 
     this.$http.get('/api/friends_posts')
     .then((res) => {
-      console.log(res);
-      this.friendsPosts = res.body
-
-      if (this.friendsPosts.length === 0) {
+      if (res.body.length === 0) {
         let newUser = {};
-        newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
-        newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
-        newUser.firstName = "John";
-        newUser.lastName = "Doe";
-        newUser.gardenName = "Cool Garden";
-        newUser.gardenId = 0;
-        console.log(newUser);
-        this.friendsPosts = [newUser]
+          newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
+          newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
+          newUser.firstName = "John";
+          newUser.lastName = "Doe";
+          newUser.gardenName = "Cool Garden";
+          newUser.gardenId = 0;
+          console.log(newUser);
+          this.friendsPosts = [newUser]
+      } else {
+        this.friendsPosts = res.body;
       }
     })
     .catch((err) => {
@@ -184,7 +183,7 @@ export default {
 
   },
 
-  beforeCreate: function() {
+  created: function() {
     this.$emit('checkIfLogged');
 
     this.$http.get('/api/user')
@@ -194,10 +193,21 @@ export default {
       return this.$http.get('/api/friends_posts')
     })
     .then((res) => {
-      // this.friendsPosts = res.body;
-      this.selectedGardenPost = res.body[0].id;
+      if (res.body.length === 0) {
+        let newUser = {};
+          newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
+          newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
+          newUser.firstName = "John";
+          newUser.lastName = "Doe";
+          newUser.gardenName = "Cool Garden";
+          newUser.gardenId = 0;
+          console.log(newUser);
+          this.friendsPosts = [newUser]
+      } else {
+        this.friendsPosts = res.body;
 
-      console.log('no good');
+      }
+
     })
     .catch((err) => {
       console.error(err);
@@ -214,9 +224,6 @@ export default {
     .catch((err) => {
       console.error(err);
     })
-
-  },
-  created: function () {
 
   },
 

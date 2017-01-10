@@ -41,9 +41,10 @@ router.get('/api/user' , authorize, (req, res, next) => {
   const userId = req.token.userId;
 
   knex('users')
-  .select('first_name', 'last_name', 'username', 'profile_pic')
+  .select('first_name', 'last_name', 'username', 'profile_pic', 'id')
   .where('users.id', userId)
   .then((rows) => {
+    console.log(rows);
     res.send(camelizeKeys(rows[0]))
   })
   .catch((err) => {
