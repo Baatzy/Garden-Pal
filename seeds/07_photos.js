@@ -7,10 +7,16 @@ exports.seed = function(knex) {
   .then(() => {
     return knex('photos').insert([{
       id: 1,
-      url: 'http://images.meredith.com/content/dam/bhg/Images/2007/07/BHG115876.jpg.rendition.largest.550.jpg',
+      url: 'https://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg',
     }, {
       id:2,
-      url: 'https://s-media-cache-ak0.pinimg.com/736x/0f/b1/25/0fb12570954ea903a243605c7336da5a.jpg'
+      url: 'https://res.cloudinary.com/derekww/image/upload/v1483724188/ux8gg8d4wjfptoqk2oba.jpg'
+    }, {
+      id:3,
+      url: 'https://res.cloudinary.com/derekww/image/upload/v1483680600/xsmxsjqx6z1jfh18yrcg.jpg'
+    }, {
+      id:4,
+      url: 'https://res.cloudinary.com/derekww/image/upload/v1483723864/nl4oxt4jqzmj7vid6bm2.jpg'
     }]);
   })
   .then(() => {

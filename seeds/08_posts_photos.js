@@ -16,11 +16,11 @@ exports.seed = function(knex) {
     }, {
       id: 3,
       post_id: 3,
-      photo_id: 2
+      photo_id: 3
     }, {
       id: 4,
       post_id: 4,
-      photo_id: 1
+      photo_id: 4
     }]);
   })
   .then(() => {
