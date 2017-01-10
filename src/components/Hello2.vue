@@ -155,32 +155,38 @@ export default {
   },
 
   beforeMount: function() {
-    $(document).ready(function(){
-      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-      $('.modal').modal();
-      $('select').material_select();
-    });
+
+
+
 
     this.$http.get('/api/friends_posts')
     .then((res) => {
-      if (res.body.length === 0) {
+      console.log(res);
+      this.friendsPosts = res.body
+
+      if (this.friendsPosts.length === 0) {
         let newUser = {};
-          newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
-          newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
-          newUser.firstName = "John";
-          newUser.lastName = "Doe";
-          newUser.gardenName = "Cool Garden";
-          newUser.gardenId = 0;
-          console.log(newUser);
-          this.friendsPosts = [newUser]
-      } else {
-        this.friendsPosts = res.body;
+        newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
+        newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
+        newUser.firstName = "John";
+        newUser.lastName = "Doe";
+        newUser.gardenName = "Cool Garden";
+        newUser.gardenId = 0;
+        console.log(newUser);
+        this.friendsPosts = [newUser]
       }
     })
     .catch((err) => {
       console.error(err);
     })
 
+  },
+  mounted: function () {
+    $(document).ready(function(){
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+      $('select').material_select();
+    });
   },
 
   created: function() {
@@ -193,6 +199,7 @@ export default {
       return this.$http.get('/api/friends_posts')
     })
     .then((res) => {
+      console.log(res);
       if (res.body.length === 0) {
         let newUser = {};
           newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
@@ -207,7 +214,10 @@ export default {
         this.friendsPosts = res.body;
 
       }
+      this.selectedGardenPost = res.body[0].id;
 
+
+      console.log('no good');
     })
     .catch((err) => {
       console.error(err);
