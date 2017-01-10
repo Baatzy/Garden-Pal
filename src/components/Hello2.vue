@@ -153,18 +153,17 @@ export default {
       postContent: '',
     }
   },
-
-  beforeMount: function() {
-
-
-
+  mounted: function() {
+    $(document).ready(function(){
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+      $('select').material_select();
+    });
 
     this.$http.get('/api/friends_posts')
     .then((res) => {
-      console.log(res);
-      this.friendsPosts = res.body
 
-      if (this.friendsPosts.length === 0) {
+      if (res.body.length === 0) {
         let newUser = {};
         newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
         newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
@@ -172,24 +171,18 @@ export default {
         newUser.lastName = "Doe";
         newUser.gardenName = "Cool Garden";
         newUser.gardenId = 0;
-        console.log(newUser);
         this.friendsPosts = [newUser]
+      } else {
+        this.friendsPosts = res.body
       }
+
     })
     .catch((err) => {
       console.error(err);
     })
-
-  },
-  mounted: function () {
-    $(document).ready(function(){
-      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-      $('.modal').modal();
-      $('select').material_select();
-    });
   },
 
-  created: function() {
+  beforeCreate: function() {
     this.$emit('checkIfLogged');
 
     this.$http.get('/api/user')
@@ -199,25 +192,21 @@ export default {
       return this.$http.get('/api/friends_posts')
     })
     .then((res) => {
-      console.log(res);
+      // this.selectedGardenPost = res.body[0].id
+
       if (res.body.length === 0) {
         let newUser = {};
-          newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
-          newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
-          newUser.firstName = "John";
-          newUser.lastName = "Doe";
-          newUser.gardenName = "Cool Garden";
-          newUser.gardenId = 0;
-          console.log(newUser);
-          this.friendsPosts = [newUser]
+        newUser.content = "This is a sample post!  Add some friends to see other peoples gardens.";
+        newUser.photoUrl = "http://res.cloudinary.com/derekww/image/upload/v1483726202/ecoqyqyr3mweferxgqbk.jpg";
+        newUser.firstName = "John";
+        newUser.lastName = "Doe";
+        newUser.gardenName = "Cool Garden";
+        newUser.gardenId = 0;
+        this.friendsPosts = [newUser]
       } else {
         this.friendsPosts = res.body;
 
       }
-      this.selectedGardenPost = res.body[0].id;
-
-
-      console.log('no good');
     })
     .catch((err) => {
       console.error(err);
@@ -236,16 +225,17 @@ export default {
     })
 
   },
+  created: function () {
+
+  },
 
   methods: {
     addGarden: function () {
       if (this.gardenName !== '') {
-        console.log('here');
         let newGard = { gardenName: this.gardenName };
         this.$http.post('/api/gardens', newGard)
         .then((res) => {
           Materialize.toast('Garden Added', 2000)
-          console.log(res);
           this.gardenName = '';
         })
         .catch((err) => {
@@ -259,7 +249,6 @@ export default {
     updateGardens: function () {
       this.$http.get('/api/user_gardens')
       .then((res) => {
-        console.log(res);
         this.usersGardens = res.body;
         $(document).ready(function() {
           $('select').material_select();
@@ -272,7 +261,6 @@ export default {
     },
     postUpdatePhoto: function (e) {
       this.postPhoto = e.target.files[0];
-      console.log(this.postPhoto);
     },
     submitNewPost: function () {
       let formData = new FormData();
@@ -281,35 +269,33 @@ export default {
       formData.append('content', this.postContent);
       formData.append('photo', this.postPhoto);
 
-      console.log(formData);
 
-      // Materialize.toast('Creating Account, Please Wait...', 6000)
       this.$http.post('/api/users_post', formData
-      ).then((res) => {
-        Materialize.toast('Post submitted! Your followers will see it on their feed!', 4000)
+    ).then((res) => {
+      Materialize.toast('Post submitted! Your followers will see it on their feed!', 4000)
 
-        this.selectedGardenPost = '',
-        this.postContent = '',
-        this.postPhoto = ''
+      this.selectedGardenPost = '',
+      this.postContent = '',
+      this.postPhoto = ''
+    })
+    .catch((err) => {
+      Materialize.toast(err.body, 4000)
+      console.log(err);
+    })},
+    showYourPosts: function () {
+      this.$http.get('/api/users_posts')
+      .then((res) => {
+        this.friendsPosts = res.body;
       })
-      .catch((err) => {
-        Materialize.toast(err.body, 4000)
-        console.log(err);
-      })},
-      showYourPosts: function () {
-        this.$http.get('/api/users_posts')
-        .then((res) => {
-          this.friendsPosts = res.body;
-        })
-      },
-      showFriendsPosts: function () {
-        this.$http.get('/api/friends_posts')
-        .then((res) => {
-          this.friendsPosts = res.body
-        })
-      }
+    },
+    showFriendsPosts: function () {
+      this.$http.get('/api/friends_posts')
+      .then((res) => {
+        this.friendsPosts = res.body
+      })
     }
   }
+}
 
 </script>
 
