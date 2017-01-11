@@ -3,7 +3,7 @@
     <header>
       <nav class="color">
         <div class="nav-wrapper container">
-          <router-link to="/" class="brand-logo ">Garden Bro</router-link>
+          <router-link to="/" class="brand-logo ">Garden Pal</router-link>
           <ul class="right">
             <li v-if="isLoggedIn === false"><router-link to="/">Home</router-link></li>
             <li v-if="isLoggedIn === true"><router-link to="/profile">Your Profile</router-link></li>

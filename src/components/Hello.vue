@@ -3,7 +3,7 @@
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
         <br><br>
-        <h1 class="header center accent-text">Garden Bro</h1>
+        <h1 class="header center accent-text">Garden Pal</h1>
         <div class="row center">
           <h5 class="header col s12 light">A place to share your garden with your friends. </h5>
           <h5 class="header col s12 light">Showoff your garden, post updates as it grows.</h5>

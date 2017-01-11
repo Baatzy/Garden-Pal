@@ -4,7 +4,7 @@
 
      <div class="footer-copyright">
        <div class="container">
-       © 2017 Garden Bro
+       © 2017 Garden Pal
        </div>
      </div>
    </footer>
